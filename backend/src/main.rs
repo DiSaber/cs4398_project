@@ -3,9 +3,7 @@ mod database;
 mod models;
 mod routes;
 
-use axum::Router;
-
-use crate::{app_state::AppState, database::Database, routes::lobbies};
+use crate::{app_state::AppState, database::Database};
 
 #[tokio::main]
 async fn main() {
@@ -17,9 +15,7 @@ async fn main() {
         .await
         .expect("Database tables should be created");
 
-    let app = Router::new()
-        .nest("/api/lobbies", lobbies::router())
-        .with_state(AppState { database });
+    let app = routes::router().with_state(AppState { database });
 
     let listener = tokio::net::TcpListener::bind("0.0.0.0:3000").await.unwrap();
     println!("listening on {}", listener.local_addr().unwrap());
