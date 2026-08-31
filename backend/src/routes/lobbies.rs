@@ -16,8 +16,8 @@ pub fn router() -> Router<AppState> {
 /// Creates a new lobby and returns.
 async fn create_lobby(State(_app_state): State<AppState>) -> Result<Json<String>, LobbyError> {
     // TODO: Store in db
-    let id = JoinCode::new(rand::random());
-    Ok(Json(id.to_string()))
+    let join_code = JoinCode::new(rand::random());
+    Ok(Json(join_code.to_string()))
 }
 
 // TODO: Probably a shared `AppError`
